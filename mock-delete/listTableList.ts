@@ -2,7 +2,7 @@ import { parse } from 'node:url';
 import dayjs from 'dayjs';
 import type { Request, Response } from 'express';
 
-// mock tableListDataSource
+// mock-delete tableListDataSource
 const genList = (current: number, pageSize: number) => {
   const tableListDataSource: API.RuleListItem[] = [];
 

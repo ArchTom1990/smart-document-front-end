@@ -149,7 +149,26 @@ export const layout: RunTimeLayoutConfig = ({
  * 它基于 axios 和 ahooks 的 useRequest 提供了一套统一的网络请求和错误处理方案。
  * @doc https://umijs.org/docs/max/request#配置
  */
+
+const authHeaderInterceptor: RequestInterceptor = ( url: string, options:  RequestOptionsInit ) => {
+  const obj: any = options;
+  if(localStorage.getItem('token')) {
+    const token = localStorage.getItem('token');
+    obj.headers = {
+      ...obj.headers,
+      // "Authorization": token||'',
+      "Authorization": `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    }
+  }
+  return { url, obj };
+}
+
 export const request: RequestConfig = {
+  credentials: 'include',
+  requestInterceptors: [
+    authHeaderInterceptor
+  ],
   // baseURL: 'https://proapi.azurewebsites.net',
   baseURL: 'http://127.0.0.1:8080',
   ...errorConfig,
